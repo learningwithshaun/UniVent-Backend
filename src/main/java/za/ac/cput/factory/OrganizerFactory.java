@@ -1,6 +1,6 @@
 package za.ac.cput.factory;
 
-//import za.ac.cput.domain.Event;
+import za.ac.cput.domain.Event;
 import za.ac.cput.domain.Organizer;
 import za.ac.cput.util.Helper;
 
@@ -52,7 +52,7 @@ public class OrganizerFactory {
         return new Organizer.Builder()
                 .setName(name)
                 .setEmail(email)
-                .setPassword(password)
+                .setPasswordHash(password)
                 .setPhoneNumber(phoneNumber)
                 .setOrganizationName(organizationName)
                 .setOrganizationType(organizationType)
