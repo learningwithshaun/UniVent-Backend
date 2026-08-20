@@ -1,5 +1,6 @@
 package za.ac.cput.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import za.ac.cput.domain.Organizer;
 import za.ac.cput.domain.RoleEnum;
 import za.ac.cput.domain.Student;
@@ -14,7 +15,7 @@ import za.ac.cput.repository.StudentRepository;
 import za.ac.cput.repository.UserRepository;
 import za.ac.cput.util.JwtUtil;
 import za.ac.cput.dtos.AuthResponse;
-
+@Service
 public class AuthService {
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
