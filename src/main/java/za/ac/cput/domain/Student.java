@@ -14,7 +14,16 @@ public class Student extends User{
     protected Student(){}
 
     private Student(Builder builder){
-
+        this.userId = builder.userId;
+        this.name = builder.name;
+        this.email = builder.email;
+        this.passwordHash = builder.passwordHash;
+        this.phoneNumber = builder.phoneNumber;
+        this.role = builder.role;
+        this.studentNumber = builder.studentNumber;
+        this.faculty = builder.faculty;
+        this.department = builder.department;
+        this.yearOfStudy = builder.yearOfStudy;
     }
 
     public static class Builder{
