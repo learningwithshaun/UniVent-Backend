@@ -1,7 +1,7 @@
 package za.ac.cput.factory;
 
 import za.ac.cput.domain.Administrator;
-//import za.ac.cput.domain.Event;
+import za.ac.cput.domain.Event;
 import za.ac.cput.domain.User;
 import za.ac.cput.util.Helper;
 
@@ -44,7 +44,7 @@ public class AdministratorFactory {
         return new Administrator.Builder()
                 .setName(name)
                 .setEmail(email)
-                .setPassword(password)
+                .setPasswordHash(password)
                 .setPhoneNumber(phoneNumber)
                 .setAdminLevel(adminLevel)
                 .setManagedUsers(managedUsers)
