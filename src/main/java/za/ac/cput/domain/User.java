@@ -13,6 +13,8 @@ public abstract class User {
     protected String passwordHash;
     protected String phoneNumber;
     protected RoleEnum role;
+    @Column(nullable = false)
+    protected boolean disabled = false;
 
     public String getUserId() {
         return userId;
@@ -41,5 +43,13 @@ public abstract class User {
 
     public RoleEnum getRole() {
         return role;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 }
