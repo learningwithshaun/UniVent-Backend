@@ -16,10 +16,11 @@ public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ticketId;
+    private Long ticketId;
     private int bookingId;
     private int issueDate;
-    private int ticketCode;
+    private String ticketCode;
+    private boolean used;
 
     protected Ticket() {
         /* required by JPA */
@@ -30,9 +31,10 @@ public class Ticket {
         this.bookingId = builder.bookingId;
         this.issueDate = builder.issueDate;
         this.ticketCode = builder.ticketCode;
+        this.used = builder.used;
     }
 
-    public int getTicketId() {
+    public Long getTicketId() {
         return ticketId;
     }
 
@@ -44,8 +46,12 @@ public class Ticket {
         return issueDate;
     }
 
-    public int getTicketCode() {
+    public String getTicketCode() {
         return ticketCode;
+    }
+
+    public boolean isUsed() {
+        return used;
     }
 
     @Override
@@ -54,17 +60,19 @@ public class Ticket {
                 "ticketId=" + ticketId +
                 ", bookingId=" + bookingId +
                 ", issueDate=" + issueDate +
-                ", ticketCode=" + ticketCode +
+                ", ticketCode='" + ticketCode + '\'' +
+                ", used=" + used +
                 '}';
     }
 
     public static class Builder {
-        private int ticketId;
+        private Long ticketId;
         private int bookingId;
         private int issueDate;
-        private int ticketCode;
+        private String ticketCode;
+        private boolean used;
 
-        public Builder setTicketId(int ticketId) {
+        public Builder setTicketId(Long ticketId) {
             this.ticketId = ticketId;
             return this;
         }
@@ -79,8 +87,13 @@ public class Ticket {
             return this;
         }
 
-        public Builder setTicketCode(int ticketCode) {
+        public Builder setTicketCode(String ticketCode) {
             this.ticketCode = ticketCode;
+            return this;
+        }
+
+        public Builder setUsed(boolean used) {
+            this.used = used;
             return this;
         }
 

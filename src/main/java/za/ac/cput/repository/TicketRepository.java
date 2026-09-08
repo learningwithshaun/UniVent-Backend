@@ -5,6 +5,7 @@ import za.ac.cput.domain.Ticket;
 
 import java.util.Optional;
 
-public interface TicketRepository extends JpaRepository<Ticket, Integer> {
+public interface TicketRepository extends JpaRepository<Ticket, Long> {
+    Optional<Ticket> findByTicketCode(String ticketCode);
     Optional<Ticket> findByBookingId(int bookingId);
 }
