@@ -17,18 +17,20 @@ import java.util.List;
 public class Organizer extends User{
     private String organizationName;
     private String organizationType;
-    private String contactEmail;
-    private List<Event> events;
+
 
     public Organizer() {
     }
 
     public Organizer(Builder builder) {
-        //super(builder);
+        this.userId = builder.userId;
+        this.name = builder.name;
+        this.email = builder.email;
+        this.passwordHash = builder.passwordHash;
+        this.phoneNumber = builder.phoneNumber;
+        this.role = builder.role;
         this.organizationName = builder.organizationName;
         this.organizationType = builder.organizationType;
-        this.contactEmail = builder.contactEmail;
-        this.events = builder.events;
     }
 
     public String getOrganizationName() {
@@ -39,20 +41,18 @@ public class Organizer extends User{
         return organizationType;
     }
 
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
     @Override
     public String toString() {
         return "Organizer{" +
                 "organizationName='" + organizationName + '\'' +
                 ", organizationType='" + organizationType + '\'' +
-                ", contactEmail='" + contactEmail + '\'' +
+                ", userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", role=" + role +
+                ", disabled=" + disabled +
                 '}';
     }
 
@@ -65,8 +65,6 @@ public class Organizer extends User{
         private RoleEnum role;
         private String organizationName;
         private String organizationType;
-        private String contactEmail;
-        private List<Event> events;
 
         public Builder setUserId(String userId) {
             this.userId = userId;
@@ -108,21 +106,7 @@ public class Organizer extends User{
             return this;
         }
 
-        public Builder setContactEmail(String contactEmail) {
-            this.contactEmail = contactEmail;
-            return this;
-        }
-
-        public Builder setEvents(List<Event> events){
-            this.events = events;
-            return this;
-        }
-
-
         public Organizer build() {
-//            if (this.getUserId() == 0) {
-//                this.setUserId(UserIdGenerator.getInstance().generateId());
-//            }
             return new Organizer(this);
         }
     }
