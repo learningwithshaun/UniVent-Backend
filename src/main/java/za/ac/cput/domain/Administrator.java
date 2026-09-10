@@ -1,6 +1,5 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -17,38 +16,37 @@ import java.util.List;
 @Table(name ="administrator")
 public class Administrator extends User {
     private String adminLevel;
-    private List<User> managedUsers;
-    private List<Event> managedEvents;
 
 
     public Administrator() {
     }
 
     private Administrator(Builder builder) {
-        //super(builder);
+        this.userId = builder.userId;
+        this.name = builder.name;
+        this.email = builder.email;
+        this.passwordHash = builder.passwordHash;
+        this.phoneNumber = builder.phoneNumber;
+        this.role = builder.role;
         this.adminLevel = builder.adminLevel;
-        this.managedUsers = builder.managedUsers;
-        this.managedEvents = builder.managedEvents;
+
     }
 
     public String getAdminLevel() {
         return adminLevel;
     }
 
-    public List<User> getManagedUsers() {
-        return managedUsers;
-    }
-
-    public List<Event> getManagedEvents() {
-        return managedEvents;
-    }
-
     @Override
     public String toString() {
         return "Administrator{" +
                 "adminLevel='" + adminLevel + '\'' +
-                ", managedUsers=" + managedUsers +
-                ", managedEvents=" + managedEvents +
+                ", userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", role=" + role +
+                ", disabled=" + disabled +
                 '}';
     }
 
@@ -60,8 +58,6 @@ public class Administrator extends User {
         private String phoneNumber;
         private RoleEnum role;
         private String adminLevel;
-        private List<User> managedUsers;
-        private List<Event> managedEvents;
 
         public Builder setUserId(String userId) {
             this.userId = userId;
@@ -97,21 +93,7 @@ public class Administrator extends User {
             this.adminLevel = adminLevel;
             return this;
         }
-
-        public Builder setManagedUsers(List<User> managedUsers) {
-            this.managedUsers = managedUsers;
-            return this;
-        }
-
-        public Builder setManagedEvents(List<Event> managedEvents) {
-            this.managedEvents = managedEvents;
-            return this;
-        }
-
         public Administrator build() {
-//            if (this.getUserId() == 0) {
-//                this.setUserId(UserIdGenerator.getInstance().generateId());
-//            }
             return new Administrator(this);
         }
     }
