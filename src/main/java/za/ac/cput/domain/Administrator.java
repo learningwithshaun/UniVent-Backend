@@ -50,7 +50,7 @@ public class Administrator extends User {
                 '}';
     }
 
-    public static class Builder /*extends User.Builder<Builder>*/ {
+    public static class Builder{
         private String userId;
         private String name;
         private String email;
