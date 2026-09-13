@@ -1,6 +1,7 @@
 package za.ac.cput.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class Organizer extends User{
     private String organizationName;
     private String organizationType;
     private String contactEmail;
+    @OneToMany(mappedBy = "organizer")
     private List<Event> events;
 
     public Organizer() {
