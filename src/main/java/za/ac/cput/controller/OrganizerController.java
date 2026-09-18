@@ -39,9 +39,10 @@ public class OrganizerController {
     }
 
 
-    @PutMapping("/events")
-    public ResponseEntity<EventResponseDTO> updateEvent(@RequestBody Event event) {
-        Event updated = organizerService.updateEvent(event);
+    @PutMapping("/{organizerId}/events")
+    public ResponseEntity<EventResponseDTO> updateEvent(@PathVariable String organizerId,
+                                                        @RequestBody Event event) {
+        Event updated = organizerService.updateEvent(organizerId, event);
         return updated == null ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(toEventDTO(updated));
     }

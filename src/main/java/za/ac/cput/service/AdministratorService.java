@@ -77,7 +77,7 @@ public class AdministratorService implements IAdministratorService {
 
     @Override
     public List<Event> viewPendingEvents() {
-        return null /*eventRepository.findByStatus(EventStatusEnum.PENDING_APPROVAL)*/;
+        return eventRepository.findByStatus(EventStatusEnum.PENDING_APPROVAL);
     }
 
 

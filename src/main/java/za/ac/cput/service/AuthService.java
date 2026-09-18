@@ -77,8 +77,7 @@ public class AuthService {
                     request.getPhoneNumber(),
                     request.getOrganizationName(),
                     request.getOrganizationType(),
-                    null,
-                    request.getContactEmail()
+                    request.getOrganizationEmail()
             );
             savedUser = organizerRepository.save(organizer);
 

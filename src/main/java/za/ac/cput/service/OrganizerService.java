@@ -78,7 +78,7 @@ public class OrganizerService implements IOrganizerService {
 
 
     @Override
-    public Event updateEvent(Event event) {
+    public Event updateEvent(String organizerId, Event event) {
         if (event == null) {
             return null;
         }
@@ -86,8 +86,9 @@ public class OrganizerService implements IOrganizerService {
         if (existing == null) {
             return null;
         }
+        verifyOwnership(existing, organizerId);
         // an organizer may never reassign ownership or self-approve via update
-        //event.setOrganizer(existing.getOrganizer());
+        event.setOrganizer(existing.getOrganizer());
         event.setStatus(existing.getStatus());
         return eventRepository.save(event);
     }

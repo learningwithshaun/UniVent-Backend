@@ -20,7 +20,7 @@ public interface IOrganizerService extends IService<Organizer, String> {
     Event createEvent(Event event);
 
 
-    Event updateEvent(Event event);
+    Event updateEvent(String organizerId, Event event);
 
 
     Event cancelEvent(Integer eventId, String organizerId);

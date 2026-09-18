@@ -27,7 +27,7 @@ public class OrganizerControllerTest {
 	void testCreateOrganizer() {
 		Organizer org = new Organizer.Builder()
 				.setOrganizationName("UniVent")
-				.setContactEmail("info@univent.com")
+				.setOrganizationEmail("info@univent.com")
 				.build();
 
 		when(service.create(org)).thenReturn(org);
@@ -44,7 +44,7 @@ public class OrganizerControllerTest {
 	void testGetOrganizerById() {
 		Organizer org = new Organizer.Builder()
 				.setOrganizationName("OrgName")
-				.setContactEmail("contact@org.com")
+				.setOrganizationEmail("contact@org.com")
 				.build();
 
 		when(service.read("1")).thenReturn(org);
