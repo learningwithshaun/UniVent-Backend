@@ -55,9 +55,9 @@ public class BookingServiceTest {
                 .build();
 
         Venue venue = new Venue.Builder()
-                .setName("Main Hall")
+                .setVenueName("Main Hall")
                 .setAddress("123 Main St")
-                .setCapacity("500")
+                .setCapacity(500)
                 .build();
 
         return new Event.Builder()
@@ -153,9 +153,9 @@ public class BookingServiceTest {
                 .build();
 
         Venue venue = new Venue.Builder()
-                .setName("Main Hall")
+                .setVenueName("Main Hall")
                 .setAddress("123 Main St")
-                .setCapacity("500")
+                .setCapacity(500)
                 .build();
 
         Event pastEvent = new Event.Builder()
