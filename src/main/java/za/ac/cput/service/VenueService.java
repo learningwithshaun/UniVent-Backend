@@ -32,17 +32,20 @@ public class VenueService implements IVenueService {
     }
 
     @Override
-    public Venue read(Integer integer) {
-        return venueRepository.findById(integer).orElse(null);
+    public Venue read(String venueId) {
+        return venueRepository.findById(venueId).orElse(null);
     }
 
     @Override
     public Venue update(Venue venue) {
+        if (venue == null) {
+            return null;
+        }
         return venueRepository.save(venue);
     }
 
     @Override
-    public void delete(Integer integer) {
-        venueRepository.deleteById(integer);
+    public void delete(String venueId) {
+        venueRepository.deleteById(venueId);
     }
 }

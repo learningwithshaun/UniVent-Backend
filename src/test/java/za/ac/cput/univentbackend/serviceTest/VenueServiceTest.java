@@ -33,7 +33,8 @@ public class VenueServiceTest {
 
         Venue venue = new Venue.Builder()
                 .setVenueName("CPUT Hall")
-                .setAddress("Bellville Campus")
+                .setCampus("Bellville Campus")
+                .setLocationDetails("Ground Floor, Block A")
                 .setCapacity(500)
                 .build();
 
@@ -43,7 +44,7 @@ public class VenueServiceTest {
 
         assertNotNull(created);
         assertEquals("CPUT Hall", created.getVenueName());
-        assertEquals("Bellville Campus", created.getAddress());
+        assertEquals("Bellville Campus", created.getCampus());
 
         verify(repository).save(venue);
     }
@@ -53,18 +54,19 @@ public class VenueServiceTest {
 
         Venue venue = new Venue.Builder()
                 .setVenueName("Main Hall")
-                .setAddress("Cape Town")
+                .setCampus("Cape Town Campus")
+                .setLocationDetails("First Floor")
                 .setCapacity(300)
                 .build();
 
-        when(repository.findById(1)).thenReturn(Optional.of(venue));
+        when(repository.findById("V1")).thenReturn(Optional.of(venue));
 
-        Venue found = service.read(1);
+        Venue found = service.read("V1");
 
         assertNotNull(found);
         assertEquals("Main Hall", found.getVenueName());
 
-        verify(repository).findById(1);
+        verify(repository).findById("V1");
     }
 
     @Test
@@ -72,7 +74,8 @@ public class VenueServiceTest {
 
         Venue venue = new Venue.Builder()
                 .setVenueName("Updated Hall")
-                .setAddress("District Six")
+                .setCampus("District Six Campus")
+                .setLocationDetails("Second Floor")
                 .setCapacity(700)
                 .build();
 
@@ -90,9 +93,9 @@ public class VenueServiceTest {
     @Test
     void testDeleteVenue() {
 
-        service.delete(1);
+        service.delete("V1");
 
-        verify(repository).deleteById(1);
+        verify(repository).deleteById("V1");
     }
 
     @Test
