@@ -20,6 +20,10 @@ public class Event {
     private String dateTime;
     private int maxAttendees;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EventStatusEnum status = EventStatusEnum.UPCOMING;
+
     @ManyToOne
     @JoinColumn(name = "organizer_id")
     private Organizer organizer;
@@ -35,6 +39,7 @@ public class Event {
         this.description = builder.description;
         this.dateTime = builder.dateTime;
         this.maxAttendees = builder.maxAttendees;
+        this.status = builder.status;
         this.organizer = builder.organizer;
         this.venue = builder.venue;
     }
@@ -49,10 +54,16 @@ public class Event {
         return dateTime; }
     public int getMaxAttendees() {
         return maxAttendees; }
+    public EventStatusEnum getStatus() {
+        return status; }
     public Organizer getOrganizer() {
         return organizer; }
     public Venue getVenue() {
         return venue; }
+
+    public void setStatus(EventStatusEnum status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
@@ -73,6 +84,7 @@ public class Event {
         private String description;
         private String dateTime;
         private int maxAttendees;
+        private EventStatusEnum status = EventStatusEnum.UPCOMING;
         private Organizer organizer;
         private Venue venue;
 
@@ -90,6 +102,10 @@ public class Event {
         }
         public Builder setMaxAttendees(int maxAttendees) {
             this.maxAttendees = maxAttendees;
+            return this;
+        }
+        public Builder setStatus(EventStatusEnum status) {
+            this.status = status;
             return this;
         }
         public Builder setOrganizer(Organizer organizer) {

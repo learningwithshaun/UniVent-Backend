@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import java.util.List;
 
@@ -17,7 +18,9 @@ import java.util.List;
 @Table(name ="administrator")
 public class Administrator extends User {
     private String adminLevel;
+    @Transient
     private List<User> managedUsers;
+    @Transient
     private List<Event> managedEvents;
 
 

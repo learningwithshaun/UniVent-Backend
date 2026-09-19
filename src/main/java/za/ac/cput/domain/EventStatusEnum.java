@@ -10,5 +10,7 @@ public enum EventStatusEnum {
     UPCOMING,
     ONGOING,
     COMPLETED,
-    CANCELLED
+    CANCELLED,
+    APPROVED,
+    DISABLED
 }
