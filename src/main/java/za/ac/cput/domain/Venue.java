@@ -1,7 +1,10 @@
 package za.ac.cput.domain;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *Name: Sesethu
@@ -14,11 +17,11 @@ import java.util.List;
 public class Venue {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int venueId;
+    private String venueId;
 
     private String venueName;
-    private String address;
+    private String campus;
+    private String locationDetails;
     private int capacity;
 
     @OneToMany(mappedBy = "venue")
@@ -30,12 +33,20 @@ public class Venue {
     private Venue(Builder builder) {
         this.venueId = builder.venueId;
         this.venueName = builder.venueName;
-        this.address = builder.address;
+        this.campus = builder.campus;
+        this.locationDetails = builder.locationDetails;
         this.capacity = builder.capacity;
         this.events = builder.events;
     }
 
-    public int getVenueId() {
+    @PrePersist
+    protected void onCreate() {
+        if (this.venueId == null || this.venueId.isEmpty()) {
+            this.venueId = UUID.randomUUID().toString();
+        }
+    }
+
+    public String getVenueId() {
         return venueId;
     }
 
@@ -43,8 +54,12 @@ public class Venue {
         return venueName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCampus() {
+        return campus;
+    }
+
+    public String getLocationDetails() {
+        return locationDetails;
     }
 
     public int getCapacity() {
@@ -55,25 +70,42 @@ public class Venue {
         return events;
     }
 
+    public boolean checkAvailability(LocalDateTime dateTime) {
+        if (this.events == null) {
+            return true;
+        }
+        return this.events.stream()
+                .noneMatch(event -> event.getDateTime() != null
+                        && event.getDateTime().equals(dateTime));
+    }
+
+    public void updateVenueDetails() {
+        // Intended to be handled via the Builder + Service update flow
+        // (kept here to satisfy the UML contract; actual persistence
+        // update logic lives in VenueService.update()).
+    }
+
     @Override
     public String toString() {
         return "Venue{" +
-                "venueId=" + venueId +
+                "venueId='" + venueId + '\'' +
                 ", venueName='" + venueName + '\'' +
-                ", address='" + address + '\'' +
+                ", campus='" + campus + '\'' +
+                ", locationDetails='" + locationDetails + '\'' +
                 ", capacity=" + capacity +
                 '}';
     }
 
     public static class Builder {
 
-        private int venueId;
+        private String venueId;
         private String venueName;
-        private String address;
+        private String campus;
+        private String locationDetails;
         private int capacity;
         private List<Event> events;
 
-        public Builder setVenueId(int venueId) {
+        public Builder setVenueId(String venueId) {
             this.venueId = venueId;
             return this;
         }
@@ -83,8 +115,13 @@ public class Venue {
             return this;
         }
 
-        public Builder setAddress(String address) {
-            this.address = address;
+        public Builder setCampus(String campus) {
+            this.campus = campus;
+            return this;
+        }
+
+        public Builder setLocationDetails(String locationDetails) {
+            this.locationDetails = locationDetails;
             return this;
         }
 
@@ -95,6 +132,16 @@ public class Venue {
 
         public Builder setEvents(List<Event> events) {
             this.events = events;
+            return this;
+        }
+
+        public Builder copy(Venue venue) {
+            this.venueId = venue.venueId;
+            this.venueName = venue.venueName;
+            this.campus = venue.campus;
+            this.locationDetails = venue.locationDetails;
+            this.capacity = venue.capacity;
+            this.events = venue.events;
             return this;
         }
 

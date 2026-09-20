@@ -9,5 +9,5 @@ import za.ac.cput.domain.Venue;
  * Student Number: 231118384
  */
 @Repository
-public interface VenueRepository extends JpaRepository<Venue, Integer> {
+public interface VenueRepository extends JpaRepository<Venue, String> {
 }

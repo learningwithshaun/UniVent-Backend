@@ -28,8 +28,8 @@ public class Helper {
     }
 
     // Venue-specific validation methods
-    public static boolean isValidVenueId(int venueId) {
-        return isPositive(venueId);
+    public static boolean isValidVenueId(String venueId) {
+        return !isNullOrEmpty(venueId);
     }
 
     public static boolean isValidVenueName(String venueName) {
