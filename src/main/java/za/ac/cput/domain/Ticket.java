@@ -1,6 +1,7 @@
 package za.ac.cput.domain;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 /**
  *Name: Zusiphe
@@ -15,10 +16,9 @@ import jakarta.persistence.*;
 public class Ticket {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ticketId;
+    private String ticketId;
     private int bookingId;
-    private int issueDate;
+    private LocalDate issueDate;
     private String ticketCode;
     private boolean used;
 
@@ -34,7 +34,7 @@ public class Ticket {
         this.used = builder.used;
     }
 
-    public Long getTicketId() {
+    public String getTicketId() {
         return ticketId;
     }
 
@@ -42,7 +42,7 @@ public class Ticket {
         return bookingId;
     }
 
-    public int getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
@@ -54,10 +54,15 @@ public class Ticket {
         return used;
     }
 
+    // Business method, following the same pattern as Booking.cancel()/confirm()
+    public void markAsUsed() {
+        this.used = true;
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
-                "ticketId=" + ticketId +
+                "ticketId='" + ticketId + '\'' +
                 ", bookingId=" + bookingId +
                 ", issueDate=" + issueDate +
                 ", ticketCode='" + ticketCode + '\'' +
@@ -66,13 +71,13 @@ public class Ticket {
     }
 
     public static class Builder {
-        private Long ticketId;
+        private String ticketId;
         private int bookingId;
-        private int issueDate;
+        private LocalDate issueDate;
         private String ticketCode;
         private boolean used;
 
-        public Builder setTicketId(Long ticketId) {
+        public Builder setTicketId(String ticketId) {
             this.ticketId = ticketId;
             return this;
         }
@@ -82,7 +87,7 @@ public class Ticket {
             return this;
         }
 
-        public Builder setIssueDate(int issueDate) {
+        public Builder setIssueDate(LocalDate issueDate) {
             this.issueDate = issueDate;
             return this;
         }

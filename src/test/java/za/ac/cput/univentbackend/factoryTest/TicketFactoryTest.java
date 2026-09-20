@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Ticket;
 import za.ac.cput.factory.TicketFactory;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TicketFactoryTest {
@@ -18,14 +20,14 @@ public class TicketFactoryTest {
 
         Ticket ticket = TicketFactory.createTicket(
                 1,
-                20260815,
-                1001
+                LocalDate.of(2026, 8, 15),
+                "1001"
         );
 
         assertNotNull(ticket);
         assertEquals(1, ticket.getBookingId());
-        assertEquals(20260815, ticket.getIssueDate());
-        assertEquals(1001, ticket.getTicketCode());
+        assertEquals(LocalDate.of(2026, 8, 15), ticket.getIssueDate());
+        assertEquals("1001", ticket.getTicketCode());
     }
 
     @Test
@@ -34,8 +36,8 @@ public class TicketFactoryTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 TicketFactory.createTicket(
                         0,
-                        20260815,
-                        1001));
+                        LocalDate.of(2026, 8, 15),
+                        "1001"));
 
         assertEquals("Booking ID is required", exception.getMessage());
     }
@@ -46,56 +48,44 @@ public class TicketFactoryTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 TicketFactory.createTicket(
                         -1,
-                        20260815,
-                        1001));
+                        LocalDate.of(2026, 8, 15),
+                        "1001"));
 
         assertEquals("Booking ID is required", exception.getMessage());
     }
 
     @Test
-    public void shouldThrowIfIssueDateIsZero() {
+    public void shouldThrowIfIssueDateIsNull() {
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 TicketFactory.createTicket(
                         1,
-                        0,
-                        1001));
+                        null,
+                        "1001"));
 
         assertEquals("Issue date is required", exception.getMessage());
     }
 
     @Test
-    public void shouldThrowIfIssueDateIsNegative() {
+    public void shouldThrowIfTicketCodeIsEmpty() {
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 TicketFactory.createTicket(
                         1,
-                        -20260815,
-                        1001));
-
-        assertEquals("Issue date is required", exception.getMessage());
-    }
-
-    @Test
-    public void shouldThrowIfTicketCodeIsZero() {
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                TicketFactory.createTicket(
-                        1,
-                        20260815,
-                        0));
+                        LocalDate.of(2026, 8, 15),
+                        ""));
 
         assertEquals("Ticket code is required", exception.getMessage());
     }
 
     @Test
-    public void shouldThrowIfTicketCodeIsNegative() {
+    public void shouldThrowIfTicketCodeIsNull() {
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 TicketFactory.createTicket(
                         1,
-                        20260815,
-                        -1001));
+                        LocalDate.of(2026, 8, 15),
+                        null));
 
         assertEquals("Ticket code is required", exception.getMessage());
     }

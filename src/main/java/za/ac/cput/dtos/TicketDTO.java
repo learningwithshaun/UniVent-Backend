@@ -1,10 +1,12 @@
 package za.ac.cput.dtos;
 
+import java.time.LocalDate;
+
 public class TicketDTO {
 
-    private Long ticketId;
+    private String ticketId;
     private String ticketCode;
-    private int issueDate;
+    private LocalDate issueDate;
     private boolean used;
     private String eventName;
     private String eventDateTime;
@@ -14,7 +16,7 @@ public class TicketDTO {
     public TicketDTO() {
     }
 
-    public TicketDTO(Long ticketId, String ticketCode, int issueDate, boolean used,
+    public TicketDTO(String ticketId, String ticketCode, LocalDate issueDate, boolean used,
                      String eventName, String eventDateTime, String venue, String studentName) {
         this.ticketId = ticketId;
         this.ticketCode = ticketCode;
@@ -26,7 +28,7 @@ public class TicketDTO {
         this.studentName = studentName;
     }
 
-    public Long getTicketId() {
+    public String getTicketId() {
         return ticketId;
     }
 
@@ -34,7 +36,7 @@ public class TicketDTO {
         return ticketCode;
     }
 
-    public int getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 

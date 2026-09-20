@@ -12,14 +12,13 @@ import za.ac.cput.domain.Booking;
 import za.ac.cput.domain.Event;
 import za.ac.cput.domain.Ticket;
 import za.ac.cput.dtos.TicketDTO;
-import za.ac.cput.exception.UnauthorizedException;
+import za.ac.cput.util.UnauthorizedException;
 import za.ac.cput.factory.TicketFactory;
 import za.ac.cput.repository.BookingRepository;
 import za.ac.cput.repository.TicketRepository;
 import za.ac.cput.util.Helper;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Service
 public class TicketService implements ITicketService {
@@ -46,7 +45,7 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public Ticket read(Long id) {
+    public Ticket read(String id) {
         return ticketRepository.findById(id).orElse(null);
     }
 
@@ -56,7 +55,7 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         ticketRepository.deleteById(id);
     }
 
@@ -69,8 +68,7 @@ public class TicketService implements ITicketService {
         }
 
         String ticketCode = Helper.generateId();
-        int issueDate = Integer.parseInt(
-                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        LocalDate issueDate = LocalDate.now();
 
         Ticket ticket = TicketFactory.createTicket(booking.getBookingId(), issueDate, ticketCode);
         Ticket saved = ticketRepository.save(ticket);
@@ -110,15 +108,8 @@ public class TicketService implements ITicketService {
             return null;
         }
 
-        Ticket updated = new Ticket.Builder()
-                .setTicketId(ticket.getTicketId())
-                .setBookingId(ticket.getBookingId())
-                .setIssueDate(ticket.getIssueDate())
-                .setTicketCode(ticket.getTicketCode())
-                .setUsed(true)
-                .build();
-
-        return ticketRepository.save(updated);
+        ticket.markAsUsed();
+        return ticketRepository.save(ticket);
     }
 
     private TicketDTO toDTO(Ticket ticket, Booking booking) {

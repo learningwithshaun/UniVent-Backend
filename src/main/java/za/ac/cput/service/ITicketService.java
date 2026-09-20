@@ -11,7 +11,7 @@ import za.ac.cput.domain.Booking;
 import za.ac.cput.domain.Ticket;
 import za.ac.cput.dtos.TicketDTO;
 
-public interface ITicketService extends IService<Ticket, Long> {
+public interface ITicketService extends IService<Ticket, String> {
     Ticket findByBookingId(int bookingId);
 
     // Issue #22
