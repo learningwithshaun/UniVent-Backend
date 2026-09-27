@@ -51,7 +51,7 @@ public class BookingControllerTest {
 
         Venue venue = new Venue.Builder()
                 .setVenueName("Main Hall")
-                .setAddress("123 Main St")
+                .setLocationDetails("123 Main St")
                 .setCapacity(500)
                 .build();
 
