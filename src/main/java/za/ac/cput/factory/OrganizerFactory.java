@@ -49,6 +49,7 @@ public class OrganizerFactory {
         }
 
         return new Organizer.Builder()
+                .setUserId(Helper.generateId())
                 .setName(name)
                 .setEmail(email)
                 .setPasswordHash(password)

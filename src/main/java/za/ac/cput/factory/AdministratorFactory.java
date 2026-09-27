@@ -38,6 +38,7 @@ public class AdministratorFactory {
         }
 
         return new Administrator.Builder()
+                .setUserId(Helper.generateId())
                 .setName(name)
                 .setEmail(email)
                 .setPasswordHash(password)

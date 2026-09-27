@@ -11,6 +11,10 @@ public class OrganizerFactoryTest {
     public void shouldCreateValidOrganizer() {
         Organizer organizer = OrganizerFactory.createOrganizer("Amanda", "amandamsutu02@gmail.com", "123", "0848882617", "Bitdevs", "NGO", "bitdevs@gmail.com");
         assertNotNull(organizer);
+        // User.userId is the assigned @Id with no generator, so the factory must
+        // supply a unique id or the organizer cannot be persisted.
+        assertNotNull(organizer.getUserId());
+        assertFalse(organizer.getUserId().isBlank());
         assertEquals("Amanda", organizer.getName());
         assertEquals("amandamsutu02@gmail.com", organizer.getEmail());
         assertEquals("123", organizer.getPassword());
@@ -18,6 +22,15 @@ public class OrganizerFactoryTest {
         assertEquals("Bitdevs", organizer.getOrganizationName());
         assertEquals("NGO", organizer.getOrganizationType());
         assertEquals("bitdevs@gmail.com", organizer.getOrganizationEmail());
+    }
+
+    @Test
+    public void shouldAssignUniqueUserIdToEachOrganizer() {
+        Organizer first = OrganizerFactory.createOrganizer("Amanda", "amandamsutu02@gmail.com", "123", "0848882617", "Bitdevs", "NGO", "bitdevs@gmail.com");
+        Organizer second = OrganizerFactory.createOrganizer("Amanda", "amandamsutu03@gmail.com", "123", "0848882617", "Bitdevs", "NGO", "bitdevs@gmail.com");
+        assertNotNull(first.getUserId());
+        assertNotNull(second.getUserId());
+        assertNotEquals(first.getUserId(), second.getUserId());
     }
 
     @Test

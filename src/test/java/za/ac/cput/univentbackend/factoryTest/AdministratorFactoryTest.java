@@ -11,6 +11,10 @@ public class AdministratorFactoryTest {
     public void shouldCreateValidAdministrator(){
         Administrator administrator = AdministratorFactory.createAdministrator("Sihle", "sihle@gmail.com", "123", "0614845522", "Super");
         assertNotNull(administrator);
+        // User.userId is the assigned @Id with no generator, so the factory must
+        // supply a unique id or the administrator cannot be persisted.
+        assertNotNull(administrator.getUserId());
+        assertFalse(administrator.getUserId().isBlank());
         assertEquals("Sihle", administrator.getName());
         assertEquals("sihle@gmail.com", administrator.getEmail());
         assertEquals("123", administrator.getPassword());

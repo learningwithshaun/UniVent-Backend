@@ -141,7 +141,11 @@ public class OrganizerService implements IOrganizerService {
     }
 
     private void verifyOwnership(Event event, String organizerId) {
-        if (event.getOrganizer() == null || !event.getOrganizer().getUserId().equals(organizerId)) {
+        // organizerId must come from the authenticated principal (never the URL alone)
+        if (organizerId == null
+                || event.getOrganizer() == null
+                || event.getOrganizer().getUserId() == null
+                || !event.getOrganizer().getUserId().equals(organizerId)) {
             throw new UnauthorizedException("Organizer does not own this event");
         }
     }
