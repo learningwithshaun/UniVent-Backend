@@ -27,9 +27,9 @@ public class VenueController {
         return new ResponseEntity<>(createdVenue, HttpStatus.CREATED);
     }
 
-    @GetMapping("/read/{id}")
-    public ResponseEntity<Venue> getVenueById(@PathVariable Integer id) {
-        Venue venue = service.read(id);
+    @GetMapping("/read/{venueId}")
+    public ResponseEntity<Venue> getVenueById(@PathVariable String venueId) {
+        Venue venue = service.read(venueId);
         return ResponseEntity.ok(venue);
     }
 
@@ -39,9 +39,9 @@ public class VenueController {
         return ResponseEntity.ok(updatedVenue);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteVenue(@PathVariable Integer id) {
-        service.delete(id);
+    @DeleteMapping("/delete/{venueId}")
+    public ResponseEntity<Void> deleteVenue(@PathVariable String venueId) {
+        service.delete(venueId);
         return ResponseEntity.noContent().build();
     }
 }

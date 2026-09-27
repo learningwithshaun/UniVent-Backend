@@ -1,6 +1,7 @@
 package za.ac.cput.domain;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 /**
  *Name: Zusiphe
@@ -15,11 +16,11 @@ import jakarta.persistence.*;
 public class Ticket {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ticketId;
+    private String ticketId;
     private int bookingId;
-    private int issueDate;
-    private int ticketCode;
+    private LocalDate issueDate;
+    private String ticketCode;
+    private boolean used;
 
     protected Ticket() {
         /* required by JPA */
@@ -30,9 +31,10 @@ public class Ticket {
         this.bookingId = builder.bookingId;
         this.issueDate = builder.issueDate;
         this.ticketCode = builder.ticketCode;
+        this.used = builder.used;
     }
 
-    public int getTicketId() {
+    public String getTicketId() {
         return ticketId;
     }
 
@@ -40,31 +42,42 @@ public class Ticket {
         return bookingId;
     }
 
-    public int getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public int getTicketCode() {
+    public String getTicketCode() {
         return ticketCode;
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    // Business method, following the same pattern as Booking.cancel()/confirm()
+    public void markAsUsed() {
+        this.used = true;
     }
 
     @Override
     public String toString() {
         return "Ticket{" +
-                "ticketId=" + ticketId +
+                "ticketId='" + ticketId + '\'' +
                 ", bookingId=" + bookingId +
                 ", issueDate=" + issueDate +
-                ", ticketCode=" + ticketCode +
+                ", ticketCode='" + ticketCode + '\'' +
+                ", used=" + used +
                 '}';
     }
 
     public static class Builder {
-        private int ticketId;
+        private String ticketId;
         private int bookingId;
-        private int issueDate;
-        private int ticketCode;
+        private LocalDate issueDate;
+        private String ticketCode;
+        private boolean used;
 
-        public Builder setTicketId(int ticketId) {
+        public Builder setTicketId(String ticketId) {
             this.ticketId = ticketId;
             return this;
         }
@@ -74,13 +87,18 @@ public class Ticket {
             return this;
         }
 
-        public Builder setIssueDate(int issueDate) {
+        public Builder setIssueDate(LocalDate issueDate) {
             this.issueDate = issueDate;
             return this;
         }
 
-        public Builder setTicketCode(int ticketCode) {
+        public Builder setTicketCode(String ticketCode) {
             this.ticketCode = ticketCode;
+            return this;
+        }
+
+        public Builder setUsed(boolean used) {
+            this.used = used;
             return this;
         }
 

@@ -13,7 +13,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import za.ac.cput.controller.TicketController;
 import za.ac.cput.domain.Ticket;
+import za.ac.cput.repository.UserRepository;
 import za.ac.cput.service.TicketService;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -25,6 +28,9 @@ public class TicketControllerTest {
     @Mock
     private TicketService service;
 
+    @Mock
+    private UserRepository userRepository;
+
     @InjectMocks
     private TicketController controller;
 
@@ -33,8 +39,8 @@ public class TicketControllerTest {
 
         Ticket ticket = new Ticket.Builder()
                 .setBookingId(1)
-                .setIssueDate(20260815)
-                .setTicketCode(1001)
+                .setIssueDate(LocalDate.of(2026, 8, 15))
+                .setTicketCode("1001")
                 .build();
 
         when(service.create(ticket)).thenReturn(ticket);
@@ -44,7 +50,7 @@ public class TicketControllerTest {
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(1, response.getBody().getBookingId());
-        assertEquals(1001, response.getBody().getTicketCode());
+        assertEquals("1001", response.getBody().getTicketCode());
 
         verify(service).create(ticket);
     }
@@ -53,20 +59,21 @@ public class TicketControllerTest {
     public void testGetTicketById() {
 
         Ticket ticket = new Ticket.Builder()
+                .setTicketId("ticket-2")
                 .setBookingId(2)
-                .setIssueDate(20260816)
-                .setTicketCode(2002)
+                .setIssueDate(LocalDate.of(2026, 8, 16))
+                .setTicketCode("2002")
                 .build();
 
-        when(service.read(1)).thenReturn(ticket);
+        when(service.read("ticket-2")).thenReturn(ticket);
 
-        ResponseEntity<Ticket> response = controller.getTicketById(1);
+        ResponseEntity<Ticket> response = controller.getTicketById("ticket-2");
 
         assertNotNull(response);
         assertNotNull(response.getBody());
-        assertEquals(2002, response.getBody().getTicketCode());
+        assertEquals("2002", response.getBody().getTicketCode());
 
-        verify(service).read(1);
+        verify(service).read("ticket-2");
     }
 
     @Test
@@ -74,8 +81,8 @@ public class TicketControllerTest {
 
         Ticket ticket = new Ticket.Builder()
                 .setBookingId(3)
-                .setIssueDate(20260817)
-                .setTicketCode(3003)
+                .setIssueDate(LocalDate.of(2026, 8, 17))
+                .setTicketCode("3003")
                 .build();
 
         when(service.update(ticket)).thenReturn(ticket);
@@ -85,7 +92,7 @@ public class TicketControllerTest {
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(3, response.getBody().getBookingId());
-        assertEquals(3003, response.getBody().getTicketCode());
+        assertEquals("3003", response.getBody().getTicketCode());
 
         verify(service).update(ticket);
     }
@@ -93,11 +100,11 @@ public class TicketControllerTest {
     @Test
     public void testDeleteTicket() {
 
-        ResponseEntity<Void> response = controller.delete(1);
+        ResponseEntity<Void> response = controller.delete("ticket-1");
 
         assertNotNull(response);
         assertEquals(204, response.getStatusCode().value());
 
-        verify(service).delete(1);
+        verify(service).delete("ticket-1");
     }
 }

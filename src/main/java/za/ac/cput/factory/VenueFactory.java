@@ -15,7 +15,8 @@ import java.util.List;
 public class VenueFactory {
 
     public static Venue createVenue(String venueName,
-                                    String address,
+                                    String campus,
+                                    String locationDetails,
                                     int capacity,
                                     List<Event> events) {
 
@@ -23,8 +24,12 @@ public class VenueFactory {
             throw new IllegalArgumentException("Venue name is required");
         }
 
-        if (Helper.isNullOrEmpty(address)) {
-            throw new IllegalArgumentException("Address is required");
+        if (Helper.isNullOrEmpty(campus)) {
+            throw new IllegalArgumentException("Campus is required");
+        }
+
+        if (Helper.isNullOrEmpty(locationDetails)) {
+            throw new IllegalArgumentException("Location details are required");
         }
 
         if (!Helper.isPositive(capacity)) {
@@ -33,7 +38,8 @@ public class VenueFactory {
 
         return new Venue.Builder()
                 .setVenueName(venueName)
-                .setAddress(address)
+                .setCampus(campus)
+                .setLocationDetails(locationDetails)
                 .setCapacity(capacity)
                 .setEvents(events)
                 .build();

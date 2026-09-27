@@ -21,13 +21,15 @@ public class VenueFactoryTest {
         Venue venue = VenueFactory.createVenue(
                 "CPUT Hall",
                 "Bellville Campus",
+                "Ground Floor, Block A",
                 500,
                 new ArrayList<>()
         );
 
         assertNotNull(venue);
         assertEquals("CPUT Hall", venue.getVenueName());
-        assertEquals("Bellville Campus", venue.getAddress());
+        assertEquals("Bellville Campus", venue.getCampus());
+        assertEquals("Ground Floor, Block A", venue.getLocationDetails());
         assertEquals(500, venue.getCapacity());
     }
 
@@ -38,6 +40,7 @@ public class VenueFactoryTest {
                 VenueFactory.createVenue(
                         null,
                         "Bellville Campus",
+                        "Ground Floor, Block A",
                         500,
                         new ArrayList<>()
                 ));
@@ -46,17 +49,33 @@ public class VenueFactoryTest {
     }
 
     @Test
-    public void testCreateVenueWithNullAddress() {
+    public void testCreateVenueWithNullCampus() {
 
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 VenueFactory.createVenue(
                         "CPUT Hall",
                         null,
+                        "Ground Floor, Block A",
                         500,
                         new ArrayList<>()
                 ));
 
-        assertEquals("Address is required", exception.getMessage());
+        assertEquals("Campus is required", exception.getMessage());
+    }
+
+    @Test
+    public void testCreateVenueWithNullLocationDetails() {
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                VenueFactory.createVenue(
+                        "CPUT Hall",
+                        "Bellville Campus",
+                        null,
+                        500,
+                        new ArrayList<>()
+                ));
+
+        assertEquals("Location details are required", exception.getMessage());
     }
 
     @Test
@@ -66,6 +85,7 @@ public class VenueFactoryTest {
                 VenueFactory.createVenue(
                         "CPUT Hall",
                         "Bellville Campus",
+                        "Ground Floor, Block A",
                         0,
                         new ArrayList<>()
                 ));
