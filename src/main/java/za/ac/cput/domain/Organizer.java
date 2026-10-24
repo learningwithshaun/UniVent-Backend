@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**Student name: Amanda Msutu
@@ -10,21 +11,29 @@ import java.util.List;
  * Group: 3H
  * AdministratorFactory.java
  * Date: 05 July 2026
- * **/
+ **/
 
 @Entity
-@Table(name="Organizer")
-public class Organizer extends User{
+@Table(name = "Organizer")
+public class Organizer extends User {
     private String organizationName;
     private String organizationType;
     private String contactEmail;
     private List<Event> events;
 
     public Organizer() {
+        setRole(RoleEnum.ORGANIZER);
     }
 
     public Organizer(Builder builder) {
-        //super(builder);
+        setUserId(builder.userId);
+        setName(builder.name);
+        setEmail(builder.email);
+        setPasswordHash(builder.passwordHash);
+        setPhoneNumber(builder.phoneNumber);
+        setRole(builder.role != null ? builder.role : RoleEnum.ORGANIZER);
+        setEnabled(builder.enabled);
+        setCreatedAt(builder.createdAt);
         this.organizationName = builder.organizationName;
         this.organizationType = builder.organizationType;
         this.contactEmail = builder.contactEmail;
@@ -35,16 +44,32 @@ public class Organizer extends User{
         return organizationName;
     }
 
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
+
     public String getOrganizationType() {
         return organizationType;
+    }
+
+    public void setOrganizationType(String organizationType) {
+        this.organizationType = organizationType;
     }
 
     public String getContactEmail() {
         return contactEmail;
     }
 
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
     public List<Event> getEvents() {
         return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override
@@ -56,11 +81,64 @@ public class Organizer extends User{
                 '}';
     }
 
-    public static class Builder{
+    public static class Builder {
+        private String userId;
+        private String name;
+        private String email;
+        private String passwordHash;
+        private String phoneNumber;
+        private RoleEnum role;
+        private boolean enabled = true;
+        private LocalDateTime createdAt;
         private String organizationName;
         private String organizationType;
         private String contactEmail;
         private List<Event> events;
+
+        public Builder setUserId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setPasswordHash(String passwordHash) {
+            this.passwordHash = passwordHash;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.passwordHash = password;
+            return this;
+        }
+
+        public Builder setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder setRole(RoleEnum role) {
+            this.role = role;
+            return this;
+        }
+
+        public Builder setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
 
         public Builder setOrganizationName(String organizationName) {
             this.organizationName = organizationName;
@@ -77,16 +155,12 @@ public class Organizer extends User{
             return this;
         }
 
-        public Builder setEvents(List<Event> events){
+        public Builder setEvents(List<Event> events) {
             this.events = events;
             return this;
         }
 
-
         public Organizer build() {
-//            if (this.getUserId() == 0) {
-//                this.setUserId(UserIdGenerator.getInstance().generateId());
-//            }
             return new Organizer(this);
         }
     }

@@ -1,7 +1,7 @@
 package za.ac.cput.factory;
 
 import za.ac.cput.domain.Administrator;
-//import za.ac.cput.domain.Event;
+import za.ac.cput.domain.Event;
 import za.ac.cput.domain.User;
 import za.ac.cput.util.Helper;
 

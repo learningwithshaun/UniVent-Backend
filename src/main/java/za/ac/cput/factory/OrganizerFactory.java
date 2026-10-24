@@ -1,6 +1,6 @@
 package za.ac.cput.factory;
 
-//import za.ac.cput.domain.Event;
+import za.ac.cput.domain.Event;
 import za.ac.cput.domain.Organizer;
 import za.ac.cput.util.Helper;
 
