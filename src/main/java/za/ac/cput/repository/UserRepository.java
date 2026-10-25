@@ -10,6 +10,9 @@ import za.ac.cput.domain.User;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
+    @Query("select count(u) from User u")
+    long countAllUsers();
+
     Long countByRole(RoleEnum role);
 
     @Query("SELECT u FROM User u " +

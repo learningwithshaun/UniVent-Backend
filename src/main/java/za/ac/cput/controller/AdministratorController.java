@@ -1,43 +1,60 @@
 package za.ac.cput.controller;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
-import za.ac.cput.domain.Administrator;
-import za.ac.cput.service.AdministratorService;
+import za.ac.cput.dto.*;
+import za.ac.cput.security.CurrentUserProvider;
+import za.ac.cput.service.IAdministratorService;
 
-/**Student name: Amanda Msutu
- * Student number: 222428600
- * Group: 3H
- * AdministratorFactory.java
- * Date: 05 July 2026
- * **/
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/administrators")
+@RequestMapping("/api/admin")
 public class AdministratorController {
-    private final AdministratorService administratorService;
+    private final IAdministratorService service;
+    private final CurrentUserProvider current;
 
-    public AdministratorController(AdministratorService administratorService){
-        this.administratorService = administratorService;
+    public AdministratorController(IAdministratorService service, CurrentUserProvider current) {
+        this.service = service;
+        this.current = current;
     }
-    @PostMapping
-    public ResponseEntity<Administrator> createAdministrator(@RequestBody Administrator administrator) {
-        Administrator createdAdministrator = administratorService.create(administrator);
-        return ResponseEntity.ok(createdAdministrator);
+
+    @GetMapping("/stats")
+    public PlatformStatsDTO stats() {
+        return service.getStats();
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Administrator> getAdministratorById(@PathVariable String id) {
-        Administrator administrator = administratorService.read(id);
-        return ResponseEntity.ok(administrator);
+
+    @GetMapping("/events")
+    public List<AdminEventSummaryDTO> events(@RequestParam(defaultValue = "ALL") String status) {
+        return service.getEvents(status);
     }
-    @PutMapping()
-    public ResponseEntity<Administrator> updateAdministrator(@RequestBody Administrator administrator) {
-        Administrator updatedAdministrator = administratorService.update(administrator);
-        return ResponseEntity.ok(updatedAdministrator);
+
+    @PatchMapping("/events/{id}/approve")
+    public AdminEventSummaryDTO approve(@PathVariable String id) {
+        return service.approveEvent(id);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        administratorService.delete(id);
-        return ResponseEntity.noContent().build();
+
+    @PatchMapping("/events/{id}/disable")
+    public AdminEventSummaryDTO disable(@PathVariable String id) {
+        return service.disableEvent(id);
+    }
+
+    @GetMapping("/users")
+    public Page<UserResponseDTO> users(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String role,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        if (page < 0 || size < 1) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.BAD_REQUEST, "Invalid page or size");
+        }
+        return service.getUsers(search, role, PageRequest.of(page, size));
+    }
+
+    @PatchMapping("/users/{id}/disable")
+    public UserResponseDTO disableUser(@PathVariable String id) {
+        var principal = current.getCurrentUser();
+        return service.disableUser(id, principal == null ? null : principal.userId());
     }
 }

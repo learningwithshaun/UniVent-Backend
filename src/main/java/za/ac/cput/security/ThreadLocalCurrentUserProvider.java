@@ -16,7 +16,12 @@ public class ThreadLocalCurrentUserProvider implements CurrentUserProvider {
 
     @Override
     public UserPrincipal getCurrentUser() {
-        return CURRENT_USER.get();
+        var authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) return CURRENT_USER.get();
+        var role = authentication.getAuthorities().stream().map(a -> a.getAuthority())
+                .filter(a -> a.startsWith("ROLE_")).map(a -> a.substring(5)).findFirst().orElse(null);
+        if (role == null) return CURRENT_USER.get();
+        return new UserPrincipal(authentication.getName(), null, za.ac.cput.domain.RoleEnum.valueOf(role));
     }
 
     public static void setCurrentUser(UserPrincipal principal) {

@@ -19,7 +19,7 @@ public class Organizer extends User {
     private String organizationName;
     private String organizationType;
     private String contactEmail;
-    private List<Event> events;
+    @jakarta.persistence.Transient private List<Event> events;
 
     public Organizer() {
         setRole(RoleEnum.ORGANIZER);

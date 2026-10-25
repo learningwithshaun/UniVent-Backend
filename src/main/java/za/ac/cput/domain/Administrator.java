@@ -17,8 +17,8 @@ import java.util.List;
 @Table(name = "administrator")
 public class Administrator extends User {
     private String adminLevel;
-    private List<User> managedUsers;
-    private List<Event> managedEvents;
+    @jakarta.persistence.Transient private List<User> managedUsers;
+    @jakarta.persistence.Transient private List<Event> managedEvents;
 
     public Administrator() {
         setRole(RoleEnum.ADMIN);
